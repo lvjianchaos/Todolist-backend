@@ -12,7 +12,9 @@
     <!-- 子模块 -->
     <modules>
         <module>smart-todo-common</module>
-<!--        <module>smart-todo-api</module>-->
+        <module>smart-todo-auth</module>
+        <module>smart-todo-gateway</module>
+        <!--        <module>smart-todo-api</module>-->
 <!--        <module>smart-todo-gateway</module>-->
 <!--        <module>smart-todo-auth</module>-->
 <!--        <module>smart-todo-task</module>-->
