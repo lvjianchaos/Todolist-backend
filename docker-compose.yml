@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # 1. Nacos (注册中心 & 配置中心)
+  # 访问地址: http://localhost:8848/nacos
+  # 账号密码: nacos / nacos
+  # ==========================================
+  nacos:
+    image: nacos/nacos-server:v2.2.3
+    container_name: smart-todo-nacos
+    environment:
+      - MODE=standalone
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+      - NACOS_AUTH_ENABLE=false
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    networks:
+      - smart_todo_net
+    restart: always
+
+  # ==========================================
+  # 2. MySQL 8.0 (业务数据库)
+  # 注意：宿主机端口改为了 3307，避免与本地的 MySQL 3306 冲突
+  # 连接地址: localhost:3307
+  # 账号密码: root / root
+  # ==========================================
+  mysql:
+    image: mysql:8.0
+    container_name: smart-todo-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=smart_todo
+      - TZ=Asia/Shanghai
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3307:3306" # <--- 修改这里：左边是电脑端口(3307)，右边是容器端口(3306)
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./sql/database_schema.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - smart_todo_net
+    restart: always
+
+  # ==========================================
+  # 3. Redis 7.0 (缓存)
+  # 端口: 6379
+  # ==========================================
+  redis:
+    image: redis:7.0
+    container_name: smart-todo-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    networks:
+      - smart_todo_net
+    restart: always
+
+  # ==========================================
+  # 4. RocketMQ 5.x (消息队列)
+  # ==========================================
+  rmqnamesrv:
+    image: apache/rocketmq:5.2.0
+    container_name: smart-todo-rmqnamesrv
+    ports:
+      - "9876:9876"
+    command: sh mqnamesrv
+    networks:
+      - smart_todo_net
+
+  rmqbroker:
+    image: apache/rocketmq:5.2.0
+    container_name: smart-todo-rmqbroker
+    ports:
+      - "10909:10909"
+      - "10911:10911"
+    environment:
+      - NAMESRV_ADDR=rmqnamesrv:9876
+    command: sh mqbroker -n rmqnamesrv:9876 -c /home/rocketmq/rocketmq-5.2.0/conf/broker.conf --enable-proxy
+    networks:
+      - smart_todo_net
+    depends_on:
+      - rmqnamesrv
+
+  rmq-dashboard:
+    image: apacherocketmq/rocketmq-dashboard:latest
+    container_name: smart-todo-rmq-console
+    ports:
+      - "18080:8082" # <--- 修改为 18080 避免端口冲突
+    environment:
+      - JAVA_OPTS=-Drocketmq.namesrv.addr=rmqnamesrv:9876
+    networks:
+      - smart_todo_net
+    depends_on:
+      - rmqnamesrv
+
+networks:
+  smart_todo_net:
+    driver: bridge
