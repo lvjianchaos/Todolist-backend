@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: smart-todo-gateway
+  main:
+    web-application-type: reactive # 强制指定响应式类型
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 # Nacos 地址
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启根据服务名自动找路由
+      routes:
+        # Task 模块路由配置
+        - id: task-route
+          uri: lb://smart-todo-task # 路由到 Task 服务
+          predicates:
+            - Path=/api/task/** # 匹配路径
+          filters:
+            - StripPrefix=1 # 转发时去掉 /api，变成 /task/**
+
+        # AI Agent 模块路由配置
+        - id: ai-route
+          uri: lb://smart-todo-ai-agent
+          predicates:
+            - Path=/api/ai/**
+          filters:
+            - StripPrefix=1
+
+# 自定义白名单配置
+auth:
+  skip-urls:
+    - "/api/auth/login"
+    - "/api/auth/register"
