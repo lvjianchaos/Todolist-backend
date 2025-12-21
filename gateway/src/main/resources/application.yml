@@ -1,38 +1,53 @@
 server:
-  port: 8080
+  port: 8000
 
 spring:
   application:
-    name: smart-todo-gateway
-  main:
-    web-application-type: reactive # 强制指定响应式类型
+    name: gateway
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848 # Nacos 地址
+        server-addr: 127.0.0.1:8848
     gateway:
       discovery:
         locator:
-          enabled: true # 开启根据服务名自动找路由
+          enabled: true # 开启通过服务名访问
       routes:
-        # Task 模块路由配置
+        # 任务模块
         - id: task-route
-          uri: lb://smart-todo-task # 路由到 Task 服务
+          uri: lb://task
           predicates:
-            - Path=/api/task/** # 匹配路径
+            - Path=/api/task/**
           filters:
-            - StripPrefix=1 # 转发时去掉 /api，变成 /task/**
-
-        # AI Agent 模块路由配置
-        - id: ai-route
-          uri: lb://smart-todo-ai-agent
+            - StripPrefix=1 # 去掉前缀 /api
+        # 用户/认证模块
+        - id: auth-route
+          uri: lb://auth
           predicates:
-            - Path=/api/ai/**
+            - Path=api/auth/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=1 # 去掉前缀 /api
+        # 动态记录模块
+        - id: activity-route
+          uri: lb://activity
+          predicates:
+            - Path=/api/activity/**
+          filters:
+            - StripPrefix=1 # 去掉前缀 /api
+        # ai-agent模块
+        - id: ai-agent-route
+          uri: lb://ai-agent
+          predicates:
+            - Path=/api/ai-agent/**
+          filters:
+            - StripPrefix=1 # 去掉前缀 /api
 
-# 自定义白名单配置
-auth:
-  skip-urls:
-    - "/api/auth/login"
-    - "/api/auth/register"
+# 自定义安全配置
+# 这里的配置后续可迁移到 Nacos 的 gateway.yaml 中，实现动态更新
+secure:
+  ignore-urls: # 白名单：不需要 Token 即可访问的路径
+    - /auth/login
+    - /auth/register
+  jwt:
+    # 这里的默认值仅做备用，实际会从 Nacos 读取
+    secret-key: "4JfTqMBa8cOyFfjCDzOGvQ13WC4v+Z2rmSVQlj1kAiM="

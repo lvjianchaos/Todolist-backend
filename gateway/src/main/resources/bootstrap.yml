@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml # 对应 Nacos 上的 Data ID: gateway.yaml
+        shared-configs:
+          - data-id: common.yaml # 读取公共配置
+            refresh: true
