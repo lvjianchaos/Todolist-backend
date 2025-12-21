@@ -5,16 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/auth/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/chaos/smarttodo/gateway/config/IgnoreUrlsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/chaos/smarttodo/gateway/config/JwtProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/AuthApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/enums/UserErrorCodeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/errorcode/BaseErrorCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/errorcode/IErrorCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/exception/AbstractException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/exception/ClientException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/exception/ServiceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/result/Result.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/result/Results.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/dto/req/UserLoginReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/dto/req/UserRegisterReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/util/JwtUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/src/main/resources/bootstrap.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/chaos/smarttodo/gateway/GatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/chaos/smarttodo/gateway/GatewayApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/chaos/smarttodo/gateway/filter/JwtAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/chaos/smarttodo/gateway/filter/JwtAuthFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/smart-todo-init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/smart-todo-init.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +35,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -119,7 +129,8 @@
       <workItem from="1766221475199" duration="6155000" />
       <workItem from="1766233548160" duration="4107000" />
       <workItem from="1766293632323" duration="6757000" />
-      <workItem from="1766335491975" duration="36000" />
+      <workItem from="1766335491975" duration="1049000" />
+      <workItem from="1766336683573" duration="2400000" />
     </task>
     <servers />
   </component>

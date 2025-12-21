@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        # 共享配置，若后续有全局公共配置可以开启
+        # shared-configs:
+        #   - data-id: common.yaml
+        #     refresh: true

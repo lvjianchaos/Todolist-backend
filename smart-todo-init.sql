@@ -9,7 +9,7 @@ CREATE TABLE `user` (
                         `password` VARCHAR(100) NOT NULL COMMENT '加密存储的密码',
                         `nickname` VARCHAR(50) DEFAULT NULL COMMENT '用户昵称',
                         `avatar` VARCHAR(255) DEFAULT NULL COMMENT '头像URL',
-                        `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
+                        `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 ) ENGINE=InnoDB COMMENT='用户表';
 
 -- 2. 清单分组表
