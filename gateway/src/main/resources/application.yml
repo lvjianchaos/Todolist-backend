@@ -24,7 +24,7 @@ spring:
         - id: auth-route
           uri: lb://auth
           predicates:
-            - Path=api/auth/**
+            - Path=/api/auth/**
           filters:
             - StripPrefix=1 # 去掉前缀 /api
         # 动态记录模块
@@ -46,8 +46,8 @@ spring:
 # 这里的配置后续可迁移到 Nacos 的 gateway.yaml 中，实现动态更新
 secure:
   ignore-urls: # 白名单：不需要 Token 即可访问的路径
-    - /auth/login
-    - /auth/register
+    - /api/auth/login
+    - /api/auth/register
   jwt:
     # 这里的默认值仅做备用，实际会从 Nacos 读取
     secret-key: "4JfTqMBa8cOyFfjCDzOGvQ13WC4v+Z2rmSVQlj1kAiM="
