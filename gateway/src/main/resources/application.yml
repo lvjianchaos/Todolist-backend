@@ -41,6 +41,14 @@ spring:
             - Path=/api/ai-agent/**
           filters:
             - StripPrefix=1 # 去掉前缀 /api
+      # 全局 CORS 配置
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
 
 # 自定义安全配置
 # 这里的配置后续可迁移到 Nacos 的 gateway.yaml 中，实现动态更新
@@ -51,3 +59,4 @@ secure:
   jwt:
     # 这里的默认值仅做备用，实际会从 Nacos 读取
     secret-key: "4JfTqMBa8cOyFfjCDzOGvQ13WC4v+Z2rmSVQlj1kAiM="
+

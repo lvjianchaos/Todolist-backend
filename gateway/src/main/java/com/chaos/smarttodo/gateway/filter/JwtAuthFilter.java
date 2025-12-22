@@ -84,7 +84,11 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         log.warn("Unauthorized request: {}", msg);
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.UNAUTHORIZED);
-        return response.setComplete();
+        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+
+        String json = "{\"code\": 401, \"msg\": \"" + msg + "\"}";
+        byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
+        return response.writeWith(Mono.just(response.bufferFactory().wrap(bytes)));
     }
 
     @Override
