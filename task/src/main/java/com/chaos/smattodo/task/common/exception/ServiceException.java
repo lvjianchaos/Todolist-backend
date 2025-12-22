@@ -1,0 +1,36 @@
+package com.chaos.smattodo.task.common.exception;
+
+import com.chaos.smattodo.task.common.errorcode.BaseErrorCode;
+import com.chaos.smattodo.task.common.errorcode.IErrorCode;
+
+import java.util.Optional;
+
+/**
+ * 服务器异常，表示请求在服务器处理过程中出现的问题，如数据库错误、第三方服务调用失败等
+ */
+public class ServiceException extends AbstractException {
+
+    public ServiceException(String message) {
+        this(message, null, BaseErrorCode.SERVICE_ERROR);
+    }
+
+    public ServiceException(IErrorCode errorCode) {
+        this(null, errorCode);
+    }
+
+    public ServiceException(String message, IErrorCode errorCode) {
+        this(message, null, errorCode);
+    }
+
+    public ServiceException(String message, Throwable throwable, IErrorCode errorCode) {
+        super(Optional.ofNullable(message).orElse(errorCode.message()), throwable, errorCode);
+    }
+
+    @Override
+    public String toString() {
+        return "ServiceException{" +
+                "code='" + errorCode + "'," +
+                "message='" + errorMessage + "'" +
+                '}';
+    }
+}

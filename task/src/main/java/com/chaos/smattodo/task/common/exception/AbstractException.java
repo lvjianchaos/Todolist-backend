@@ -1,6 +1,6 @@
-package com.chaos.smarttodo.auth.common.exception;
+package com.chaos.smattodo.task.common.exception;
 
-import com.chaos.smarttodo.auth.common.errorcode.IErrorCode;
+import com.chaos.smattodo.task.common.errorcode.IErrorCode;
 import lombok.Getter;
 
 /**
