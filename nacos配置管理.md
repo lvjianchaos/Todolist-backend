@@ -5,7 +5,7 @@
 ```yaml
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3307/smart_todo?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3307/smart_todo?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,4 +27,19 @@ secure:
   ignore-urls:
     - /api/auth/login
     - /api/auth/register
+```
+
+## task.yaml
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3307/smart_todo?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
 ```
