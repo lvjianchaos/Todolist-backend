@@ -63,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
         String token = jwtUtil.createToken(user.getId().toString(), user.getUsername());
 
         // 5. 构造响应对象
-        return new UserLoginRespDTO(user.getId().toString(), user.getUsername(), user.getNickname(), token);
+        return new UserLoginRespDTO(user.getId().toString(), user.getUsername(), user.getNickname(), user.getAvatar() ,token);
     }
 
     @Override

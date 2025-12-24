@@ -2,19 +2,19 @@ package com.chaos.smattodo.task.common.enums;
 
 import com.chaos.smattodo.task.common.errorcode.IErrorCode;
 
-public enum ListGroupErrorCodeEnum implements IErrorCode {
+public enum TodoListErrorCodeEnum implements IErrorCode {
 
-    LIST_GROUP_SORT_ORDER_ERROR("B000300", "清单分组排序值错误"),
+    TODO_LIST_SORT_ORDER_ERROR("B000400", "清单排序值错误"),
 
-    LIST_GROUP_NOT_FOUND("B000301", "清单分组不存在"),
+    TODO_LIST_NOT_FOUND("B000401", "清单不存在"),
 
-    LIST_GROUP_NO_PERMISSION("B000302", "无权限操作该清单分组");
+    TODO_LIST_NO_PERMISSION("B000402", "无权限操作该清单");
 
     private final String code;
 
     private final String message;
 
-    ListGroupErrorCodeEnum(String code, String message) {
+    TodoListErrorCodeEnum(String code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -29,3 +29,4 @@ public enum ListGroupErrorCodeEnum implements IErrorCode {
         return message;
     }
 }
+

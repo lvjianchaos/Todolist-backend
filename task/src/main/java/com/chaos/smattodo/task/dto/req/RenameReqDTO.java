@@ -3,6 +3,7 @@ package com.chaos.smattodo.task.dto.req;
 import lombok.Data;
 
 @Data
-public class ListGroupRemoveReqDTO {
-    private Long id;
+public class RenameReqDTO {
+    private String name;
 }
+

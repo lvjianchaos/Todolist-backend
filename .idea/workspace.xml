@@ -4,44 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="docs: 添加nacos配置文件">
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/TaskApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/enums/ListGroupErrorCodeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/errorcode/BaseErrorCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/errorcode/IErrorCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/exception/AbstractException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/exception/ClientException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/exception/ServiceException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/result/Result.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/result/Results.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/config/MyMetaObjectHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/config/MybatisPlusConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/controller/ListGroupController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/ListGroupRemoveReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/ListGroupSaveReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/ListGroupUpdateNameReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/ListGroupUpdateSortOrderReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/resp/ListGroupRespDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/entity/ListGroup.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/entity/Task.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/entity/TaskGroup.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/entity/TodoList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/mapper/ListGroupMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/mapper/TaskGroupMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/mapper/TaskMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/mapper/TodoListMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/ListGroupService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/TaskGroupService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/TaskService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/TodoListService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/ListGroupServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/resources/bootstrap.yml" afterDir="false" />
+    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="feat: 完成task模块listgroup部分功能（TODO: 嵌套删除）">
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/enums/TodoListErrorCodeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/controller/TodoListController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/CreateListGroupReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/CreateListReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/RenameReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/ReorderListsReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/ReorderReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/resp/TodoListRespDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TodoListServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/exception/AbstractException.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/common/exception/AbstractException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/task/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/数据库表设计.md" beforeDir="false" afterPath="$PROJECT_DIR$/数据库表设计.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/dto/resp/UserLoginRespDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/dto/resp/UserLoginRespDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/service/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/chaos/smarttodo/auth/service/impl/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/enums/ListGroupErrorCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/common/enums/ListGroupErrorCodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/controller/ListGroupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/controller/ListGroupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/ListGroupRemoveReqDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/ListGroupSaveReqDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/ListGroupUpdateNameReqDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/req/ListGroupUpdateSortOrderReqDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/resp/ListGroupRespDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/dto/resp/ListGroupRespDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/ListGroupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/ListGroupService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/TodoListService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/TodoListService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/ListGroupServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/ListGroupServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,7 +191,11 @@
       <workItem from="1766293632323" duration="6757000" />
       <workItem from="1766335491975" duration="1049000" />
       <workItem from="1766336683573" duration="6408000" />
-      <workItem from="1766391726986" duration="14806000" />
+      <workItem from="1766391726986" duration="14928000" />
+      <workItem from="1766467680175" duration="685000" />
+      <workItem from="1766481525164" duration="3858000" />
+      <workItem from="1766560206102" duration="5710000" />
+      <workItem from="1766576530154" duration="5590000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 完成auth模块规约部分与实体类创建">
       <option name="closed" value="true" />
@@ -230,7 +221,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766393354796</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat: 完成task模块listgroup部分功能（TODO: 嵌套删除）">
+      <option name="closed" value="true" />
+      <created>1766423484254</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1766423484254</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,7 +239,8 @@
     <MESSAGE value="feat: 完成auth模块规约部分与实体类创建" />
     <MESSAGE value="update: 更新gateway模块未授权返回json与跨域配置" />
     <MESSAGE value="docs: 添加nacos配置文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs: 添加nacos配置文件" />
+    <MESSAGE value="feat: 完成task模块listgroup部分功能（TODO: 嵌套删除）" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 完成task模块listgroup部分功能（TODO: 嵌套删除）" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

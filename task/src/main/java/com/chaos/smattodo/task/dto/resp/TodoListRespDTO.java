@@ -2,16 +2,11 @@ package com.chaos.smattodo.task.dto.resp;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class ListGroupRespDTO {
+public class TodoListRespDTO {
     private Long id;
+    private Long groupId;
     private String name;
     private Double sortOrder;
-
-    /**
-     * 该分组下的清单
-     */
-    private List<TodoListRespDTO> list;
 }
+

@@ -1,89 +1,200 @@
 package com.chaos.smattodo.task.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.chaos.smattodo.task.common.enums.ListGroupErrorCodeEnum;
-import com.chaos.smattodo.task.common.exception.ServiceException;
-import com.chaos.smattodo.task.entity.ListGroup;
-import com.chaos.smattodo.task.dto.req.ListGroupSaveReqDTO;
-import com.chaos.smattodo.task.dto.req.ListGroupUpdateNameReqDTO;
-import com.chaos.smattodo.task.dto.req.ListGroupUpdateSortOrderReqDTO;
+import com.chaos.smattodo.task.common.exception.ClientException;
+import com.chaos.smattodo.task.dto.req.CreateListGroupReqDTO;
+import com.chaos.smattodo.task.dto.req.RenameReqDTO;
+import com.chaos.smattodo.task.dto.req.ReorderReqDTO;
 import com.chaos.smattodo.task.dto.resp.ListGroupRespDTO;
+import com.chaos.smattodo.task.dto.resp.TodoListRespDTO;
+import com.chaos.smattodo.task.entity.ListGroup;
+import com.chaos.smattodo.task.entity.TodoList;
 import com.chaos.smattodo.task.mapper.ListGroupMapper;
+import com.chaos.smattodo.task.mapper.TodoListMapper;
 import com.chaos.smattodo.task.service.ListGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ListGroupServiceImpl implements ListGroupService {
 
+    private static final double GAP = 1000D;
+
     private final ListGroupMapper listGroupMapper;
+    private final TodoListMapper todoListMapper;
 
     @Override
     public List<ListGroupRespDTO> listListGroupByUserId(Long userId) {
-        LambdaQueryWrapper<ListGroup> queryWrapper = Wrappers.lambdaQuery(ListGroup.class)
+        List<ListGroup> groups = listGroupMapper.selectList(new LambdaQueryWrapper<ListGroup>()
                 .eq(ListGroup::getUserId, userId)
-                .orderByAsc(ListGroup::getSortOrder);
-        List<ListGroup> listGroups = listGroupMapper.selectList(queryWrapper);
+                .orderByAsc(ListGroup::getSortOrder)
+                .orderByAsc(ListGroup::getId));
 
-        // 使用 Stream API 将 Entity 列表转换为 DTO 列表
-        return listGroups.stream()
-                .map(item -> BeanUtil.copyProperties(item, ListGroupRespDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public void saveListGroup(Long userId, ListGroupSaveReqDTO dto) {
-        ListGroup listGroup = BeanUtil.copyProperties(dto, ListGroup.class);
-        listGroup.setUserId(userId);
-        listGroupMapper.insert(listGroup);
-    }
-
-    @Override
-    public void removeListGroup(Long listGroupId) {
-        listGroupMapper.deleteById(listGroupId);
-    }
-
-    @Override
-    public void updateListGroupName(ListGroupUpdateNameReqDTO dto) {
-        ListGroup listGroup = new ListGroup();
-        listGroup.setId(dto.getId());
-        listGroup.setName(dto.getName());
-        listGroupMapper.updateById(listGroup);
-    }
-
-    @Override
-    public void updateListGroupSortOrder(ListGroupUpdateSortOrderReqDTO dto) {
-        Double prev = dto.getPrevSortOrder();
-        Double next = dto.getNextSortOrder();
-        Double newSortOrder;
-
-        if (prev == 0 && next == 0) {
-            // 没有任何参照（第一个元素）：初始值 1000
-            newSortOrder = 1000.0;
-        } else if (prev == 0 && next > 0) {
-            // 移动到最前面：取后一个的一半
-            newSortOrder = next / 2;
-        } else if (next == 0 && prev > 0) {
-            // 移动到最后面：前一个 + 1000
-            newSortOrder = prev + 1000.0;
-        } else {
-            // 移动到中间：取前后平均值
-            // 校验顺序是否正确
-            if (prev >= next) {
-                throw new ServiceException(ListGroupErrorCodeEnum.LIST_GROUP_SORT_ORDER_ERROR);
-            }
-            newSortOrder = (prev + next) / 2;
+        if (groups.isEmpty()) {
+            return Collections.emptyList();
         }
 
-        ListGroup listGroup = new ListGroup();
-        listGroup.setId(dto.getId());
-        listGroup.setSortOrder(newSortOrder);
-        listGroupMapper.updateById(listGroup);
+        List<TodoList> lists = todoListMapper.selectList(new LambdaQueryWrapper<TodoList>()
+                .eq(TodoList::getUserId, userId)
+                .orderByAsc(TodoList::getSortOrder)
+                .orderByAsc(TodoList::getId));
+
+        Map<Long, List<TodoListRespDTO>> groupIdToLists = lists.stream()
+                .collect(Collectors.groupingBy(TodoList::getListGroupId, Collectors.mapping(this::toTodoListResp, Collectors.toList())));
+
+        List<ListGroupRespDTO> resp = new ArrayList<>(groups.size());
+        for (ListGroup group : groups) {
+            ListGroupRespDTO dto = toListGroupResp(group);
+            dto.setList(groupIdToLists.getOrDefault(group.getId(), Collections.emptyList()));
+            resp.add(dto);
+        }
+        return resp;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ListGroupRespDTO createListGroup(Long userId, CreateListGroupReqDTO dto) {
+        ListGroup group = new ListGroup();
+        group.setUserId(userId);
+        group.setName(dto.getName());
+
+        double sortOrder = dto.getPrevSortOrder() + GAP;
+        group.setSortOrder(sortOrder);
+        listGroupMapper.insert(group);
+
+        ListGroupRespDTO resp = toListGroupResp(group);
+        resp.setList(Collections.emptyList());
+        return resp;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ListGroupRespDTO renameListGroup(Long userId, Long groupId, RenameReqDTO dto) {
+        ListGroup group = listGroupMapper.selectById(groupId);
+        if (group == null) {
+            throw new ClientException(ListGroupErrorCodeEnum.LIST_GROUP_NOT_FOUND);
+        }
+        if (!Objects.equals(group.getUserId(), userId)) {
+            throw new ClientException(ListGroupErrorCodeEnum.LIST_GROUP_NO_PERMISSION);
+        }
+
+        group.setName(dto.getName());
+        listGroupMapper.updateById(group);
+
+        ListGroupRespDTO resp = toListGroupResp(group);
+        resp.setList(listListsByGroup(userId, groupId));
+        return resp;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteListGroup(Long userId, Long groupId) {
+        ListGroup group = listGroupMapper.selectById(groupId);
+        if (group == null) {
+            throw new ClientException(ListGroupErrorCodeEnum.LIST_GROUP_NOT_FOUND);
+        }
+        if (!Objects.equals(group.getUserId(), userId)) {
+            throw new ClientException(ListGroupErrorCodeEnum.LIST_GROUP_NO_PERMISSION);
+        }
+
+        // 先删除该分组下所有清单，再删除分组（简单级联）
+        todoListMapper.delete(new LambdaQueryWrapper<TodoList>()
+                .eq(TodoList::getUserId, userId)
+                .eq(TodoList::getListGroupId, groupId));
+        listGroupMapper.deleteById(groupId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<ListGroupRespDTO> reorderListGroups(Long userId, ReorderReqDTO dto) {
+        ListGroup group = listGroupMapper.selectById(dto.getMovedId());
+
+        if (group == null) {
+            throw new ClientException(ListGroupErrorCodeEnum.LIST_GROUP_NOT_FOUND);
+        }
+        if (!Objects.equals(group.getUserId(), userId)) {
+            throw new ClientException(ListGroupErrorCodeEnum.LIST_GROUP_NO_PERMISSION);
+        }
+
+        Double prev = dto.getPrevSortOrder();
+        Double next = dto.getNextSortOrder();
+        double newSort = computeSortOrder(prev, next);
+
+        // 精度耗尽兜底：取中值后如果不发生变化，则全量重排
+        if (Objects.equals(group.getSortOrder(), newSort) || (prev != null && next != null && (next - prev) < 1e-9)) {
+            reindexUserGroups(userId);
+            // 重排后重新算一次
+            newSort = computeSortOrder(prev, next);
+        }
+
+        group.setSortOrder(newSort);
+        listGroupMapper.updateById(group);
+
+        return listListGroupByUserId(userId);
+    }
+
+    private void reindexUserGroups(Long userId) {
+        List<ListGroup> groups = listGroupMapper.selectList(new LambdaQueryWrapper<ListGroup>()
+                .eq(ListGroup::getUserId, userId)
+                .orderByAsc(ListGroup::getSortOrder)
+                .orderByAsc(ListGroup::getId));
+        double current = GAP;
+        for (ListGroup g : groups) {
+            g.setSortOrder(current);
+            current += GAP;
+            listGroupMapper.updateById(g);
+        }
+    }
+
+    private List<TodoListRespDTO> listListsByGroup(Long userId, Long groupId) {
+        List<TodoList> lists = todoListMapper.selectList(new LambdaQueryWrapper<TodoList>()
+                .eq(TodoList::getUserId, userId)
+                .eq(TodoList::getListGroupId, groupId)
+                .orderByAsc(TodoList::getSortOrder)
+                .orderByAsc(TodoList::getId));
+        return lists.stream().map(this::toTodoListResp).collect(Collectors.toList());
+    }
+
+    private double computeSortOrder(Double prevSortOrder, Double nextSortOrder) {
+        double prev = prevSortOrder == null ? 0d : prevSortOrder;
+        double next = nextSortOrder == null ? 0d : nextSortOrder;
+
+        if (prev == 0d && next == 0d) {
+            return GAP;
+        }
+        if (prev == 0d) {
+            return next / 2d;
+        }
+        if (next == 0d) {
+            return prev + GAP;
+        }
+        if (prev >= next) {
+            throw new ClientException(ListGroupErrorCodeEnum.LIST_GROUP_SORT_ORDER_ERROR);
+        }
+        return (prev + next) / 2d;
+    }
+
+    private ListGroupRespDTO toListGroupResp(ListGroup group) {
+        ListGroupRespDTO dto = new ListGroupRespDTO();
+        dto.setId(group.getId());
+        dto.setName(group.getName());
+        dto.setSortOrder(group.getSortOrder());
+        return dto;
+    }
+
+    private TodoListRespDTO toTodoListResp(TodoList list) {
+        TodoListRespDTO dto = new TodoListRespDTO();
+        dto.setId(list.getId());
+        dto.setGroupId(list.getListGroupId());
+        dto.setName(list.getName());
+        dto.setSortOrder(list.getSortOrder());
+        return dto;
     }
 }
+
