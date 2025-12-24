@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="feat: 完成task模块清单分组与清单功能（删除逻辑代办）">
+    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="docs: 添加nacos配置task.yaml内容">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nacos配置管理.md" beforeDir="false" afterPath="$PROJECT_DIR$/nacos配置管理.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/smart-todo-init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/smart-todo-init.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +173,7 @@
       <workItem from="1766467680175" duration="685000" />
       <workItem from="1766481525164" duration="3858000" />
       <workItem from="1766560206102" duration="5710000" />
-      <workItem from="1766576530154" duration="6108000" />
+      <workItem from="1766576530154" duration="6979000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 完成auth模块规约部分与实体类创建">
       <option name="closed" value="true" />
@@ -215,7 +215,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766582668014</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="docs: 添加nacos配置task.yaml内容">
+      <option name="closed" value="true" />
+      <created>1766582908186</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1766582908186</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,7 +235,8 @@
     <MESSAGE value="docs: 添加nacos配置文件" />
     <MESSAGE value="feat: 完成task模块listgroup部分功能（TODO: 嵌套删除）" />
     <MESSAGE value="feat: 完成task模块清单分组与清单功能（删除逻辑代办）" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 完成task模块清单分组与清单功能（删除逻辑代办）" />
+    <MESSAGE value="docs: 添加nacos配置task.yaml内容" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs: 添加nacos配置task.yaml内容" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

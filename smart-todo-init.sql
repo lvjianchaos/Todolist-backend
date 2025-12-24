@@ -62,7 +62,6 @@ CREATE TABLE `task` (
                         `completed_at` DATETIME DEFAULT NULL COMMENT '完成时间',
                         `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                         `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-                        `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '软删除标记: 0-正常, 1-回收站',
 
     -- 核心组合索引：优化清单内任务展示
                         INDEX `idx_query_composite` (`list_id`, `task_group_id`, `sort_order`),
