@@ -40,6 +40,7 @@ CREATE TABLE `task_group` (
                               `list_id` BIGINT UNSIGNED NOT NULL COMMENT '所属清单ID',
                               `name` VARCHAR(100) NOT NULL COMMENT '任务分组名称',
                               `sort_order` DOUBLE NOT NULL DEFAULT 0 COMMENT '排序值',
+                              `is_default` TINYINT NOT NULL DEFAULT 0 COMMENT '是否默认分组: 0-否, 1-是',
                               `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                               INDEX `idx_list_sort` (`list_id`, `sort_order`)
 ) ENGINE=InnoDB COMMENT='任务分组表';
@@ -50,7 +51,7 @@ CREATE TABLE `task` (
                         `user_id` BIGINT UNSIGNED NOT NULL COMMENT '所属用户ID (隔离校验)',
                         `list_id` BIGINT UNSIGNED NOT NULL COMMENT '所属清单ID (核心查询维度)',
                         `task_group_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '所属任务分组ID',
-                        `parent_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '直接父ID (顶级为NULL)',
+                        `parent_id` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '直接父ID (顶级为NULL)',
                         `path` VARCHAR(512) NOT NULL DEFAULT '' COMMENT '路径枚举,如 "0/1/5/"',
                         `level` INT NOT NULL DEFAULT 1 COMMENT '递归深度,1为根任务',
                         `name` VARCHAR(255) NOT NULL COMMENT '任务标题',
@@ -58,7 +59,8 @@ CREATE TABLE `task` (
                         `sort_order` DOUBLE NOT NULL DEFAULT 0 COMMENT '同级排序值 (双精度取中算法)',
                         `status` TINYINT NOT NULL DEFAULT 0 COMMENT '状态: 0-待办, 1-完成, 2-已过期',
                         `priority` TINYINT NOT NULL DEFAULT 0 COMMENT '优先级: 0-无, 1-低, 2-中, 3-高',
-                        `due_at` DATETIME DEFAULT NULL COMMENT '截止时间',
+                        `started_at` DATE DEFAULT NULL COMMENT '开始时间',
+                        `due_at` DATE DEFAULT NULL COMMENT '截止时间',
                         `completed_at` DATETIME DEFAULT NULL COMMENT '完成时间',
                         `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                         `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

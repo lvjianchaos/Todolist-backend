@@ -16,6 +16,12 @@ public class TaskGroup {
     private Long listId;
     private String name;
     private Double sortOrder;
+
+    /**
+     * 是否默认分组: 0-否, 1-是
+     */
+    private Integer isDefault;
+
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 }

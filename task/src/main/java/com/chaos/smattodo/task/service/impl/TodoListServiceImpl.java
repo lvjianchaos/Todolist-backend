@@ -10,8 +10,12 @@ import com.chaos.smattodo.task.dto.req.RenameReqDTO;
 import com.chaos.smattodo.task.dto.resp.ListGroupRespDTO;
 import com.chaos.smattodo.task.dto.resp.TodoListRespDTO;
 import com.chaos.smattodo.task.entity.ListGroup;
+import com.chaos.smattodo.task.entity.Task;
+import com.chaos.smattodo.task.entity.TaskGroup;
 import com.chaos.smattodo.task.entity.TodoList;
 import com.chaos.smattodo.task.mapper.ListGroupMapper;
+import com.chaos.smattodo.task.mapper.TaskGroupMapper;
+import com.chaos.smattodo.task.mapper.TaskMapper;
 import com.chaos.smattodo.task.mapper.TodoListMapper;
 import com.chaos.smattodo.task.service.ListGroupService;
 import com.chaos.smattodo.task.service.TodoListService;
@@ -30,6 +34,9 @@ public class TodoListServiceImpl implements TodoListService {
 
     private final TodoListMapper todoListMapper;
     private final ListGroupMapper listGroupMapper;
+
+    private final TaskGroupMapper taskGroupMapper;
+    private final TaskMapper taskMapper;
 
     /**
      * 复用 list-groups 的组装逻辑：拖拽排序后前端需要刷新分组+清单整体结构
@@ -53,6 +60,23 @@ public class TodoListServiceImpl implements TodoListService {
         list.setName(dto.getName());
         list.setSortOrder(dto.getPrevSortOrder() + GAP);
         todoListMapper.insert(list);
+
+        // 创建该清单下的两个任务分组
+        // 1) 未分类（is_default = 1）
+        TaskGroup unclassified = new TaskGroup();
+        unclassified.setListId(list.getId());
+        unclassified.setName("未分类");
+        unclassified.setIsDefault(1);
+        unclassified.setSortOrder(GAP);
+        taskGroupMapper.insert(unclassified);
+
+        // 2) 默认分组（is_default = 0）
+        TaskGroup defaultGroup = new TaskGroup();
+        defaultGroup.setListId(list.getId());
+        defaultGroup.setName("默认分组");
+        defaultGroup.setIsDefault(0);
+        defaultGroup.setSortOrder(GAP * 2);
+        taskGroupMapper.insert(defaultGroup);
 
         return toTodoListResp(list);
     }
@@ -83,6 +107,14 @@ public class TodoListServiceImpl implements TodoListService {
         if (!Objects.equals(list.getUserId(), userId)) {
             throw new ClientException(TodoListErrorCodeEnum.TODO_LIST_NO_PERMISSION);
         }
+
+        // 级联删除：清单 -> 任务分组 -> 任务
+        taskMapper.delete(new LambdaQueryWrapper<Task>()
+                .eq(Task::getUserId, userId)
+                .eq(Task::getListId, listId));
+        taskGroupMapper.delete(new LambdaQueryWrapper<TaskGroup>()
+                .eq(TaskGroup::getListId, listId));
+
         todoListMapper.deleteById(listId);
     }
 

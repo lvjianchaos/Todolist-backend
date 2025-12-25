@@ -10,8 +10,12 @@ import com.chaos.smattodo.task.dto.resp.ListGroupRespDTO;
 import com.chaos.smattodo.task.dto.resp.TodoListRespDTO;
 import com.chaos.smattodo.task.entity.ListGroup;
 import com.chaos.smattodo.task.entity.TodoList;
+import com.chaos.smattodo.task.entity.Task;
+import com.chaos.smattodo.task.entity.TaskGroup;
 import com.chaos.smattodo.task.mapper.ListGroupMapper;
 import com.chaos.smattodo.task.mapper.TodoListMapper;
+import com.chaos.smattodo.task.mapper.TaskGroupMapper;
+import com.chaos.smattodo.task.mapper.TaskMapper;
 import com.chaos.smattodo.task.service.ListGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +32,9 @@ public class ListGroupServiceImpl implements ListGroupService {
 
     private final ListGroupMapper listGroupMapper;
     private final TodoListMapper todoListMapper;
+
+    private final TaskGroupMapper taskGroupMapper;
+    private final TaskMapper taskMapper;
 
     @Override
     public List<ListGroupRespDTO> listListGroupByUserId(Long userId) {
@@ -103,10 +110,31 @@ public class ListGroupServiceImpl implements ListGroupService {
             throw new ClientException(ListGroupErrorCodeEnum.LIST_GROUP_NO_PERMISSION);
         }
 
-        // 先删除该分组下所有清单，再删除分组（简单级联）
-        todoListMapper.delete(new LambdaQueryWrapper<TodoList>()
-                .eq(TodoList::getUserId, userId)
-                .eq(TodoList::getListGroupId, groupId));
+        // 层层级联删除（批量版）：ListGroup -> TodoList -> TaskGroup -> Task
+        List<Long> listIds = todoListMapper.selectList(new LambdaQueryWrapper<TodoList>()
+                        .select(TodoList::getId)
+                        .eq(TodoList::getUserId, userId)
+                        .eq(TodoList::getListGroupId, groupId))
+                .stream()
+                .map(TodoList::getId)
+                .filter(Objects::nonNull)
+                .toList();
+
+        if (!listIds.isEmpty()) {
+            // 删 task（按 listId 批量）
+            taskMapper.delete(new LambdaQueryWrapper<Task>()
+                    .eq(Task::getUserId, userId)
+                    .in(Task::getListId, listIds));
+
+            // 删 task_group（按 listId 批量）
+            taskGroupMapper.delete(new LambdaQueryWrapper<TaskGroup>()
+                    .in(TaskGroup::getListId, listIds));
+
+            // 删 list（按 id 批量）
+            todoListMapper.deleteBatchIds(listIds);
+        }
+
+        // 最后删 list_group
         listGroupMapper.deleteById(groupId);
     }
 
