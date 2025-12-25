@@ -1,6 +1,7 @@
 package com.chaos.smattodo.task.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.chaos.smattodo.task.common.enums.TaskErrorCodeEnum;
 import com.chaos.smattodo.task.common.enums.TodoListErrorCodeEnum;
 import com.chaos.smattodo.task.common.exception.ClientException;
@@ -128,34 +129,49 @@ public class TaskServiceImpl implements TaskService {
             throw new ClientException(TaskErrorCodeEnum.TASK_NO_PERMISSION);
         }
 
+        LambdaUpdateWrapper<Task> update = new LambdaUpdateWrapper<Task>()
+                .eq(Task::getId, taskId)
+                .eq(Task::getUserId, userId);
+
+        boolean needUpdate = false;
+
         if (dto.getName() != null) {
-            task.setName(dto.getName());
+            update.set(Task::getName, dto.getName());
+            needUpdate = true;
         }
         if (dto.isContentSet()) {
-            task.setContent(dto.getContent());
+            update.set(Task::getContent, dto.getContent());
+            needUpdate = true;
         }
         if (dto.isStartedAtSet()) {
-            task.setStartedAt(dto.getStartedAt());
+            update.set(Task::getStartedAt, dto.getStartedAt());
+            needUpdate = true;
         }
         if (dto.isDueAtSet()) {
-            task.setDueAt(dto.getDueAt());
+            update.set(Task::getDueAt, dto.getDueAt());
+            needUpdate = true;
         }
         if (dto.getPriority() != null) {
-            task.setPriority(dto.getPriority());
+            update.set(Task::getPriority, dto.getPriority());
+            needUpdate = true;
         }
         if (dto.getStatus() != null) {
-            task.setStatus(dto.getStatus());
+            update.set(Task::getStatus, dto.getStatus());
             if (Objects.equals(dto.getStatus(), 1)) {
-                task.setCompletedAt(LocalDateTime.now());
+                update.set(Task::getCompletedAt, LocalDateTime.now());
             } else {
-                task.setCompletedAt(null);
+                update.set(Task::getCompletedAt, null);
             }
+            needUpdate = true;
         }
 
-        taskMapper.updateById(task);
+        if (needUpdate) {
+            taskMapper.update(null, update);
+        }
 
+        Task updated = taskMapper.selectById(taskId);
         boolean hasChildren = hasChildren(userId, taskId);
-        return toResp(task, hasChildren);
+        return toResp(updated, hasChildren);
     }
 
     @Override
