@@ -67,5 +67,10 @@ public class TaskController {
                                                  @RequestBody ReorderTasksReqDTO dto) {
         return Results.success(taskService.reorderTasks(userId, dto));
     }
-}
 
+    @GetMapping("/root")
+    public Result<List<TaskRespDTO>> listRootTasks(@RequestHeader("X-User-Id") Long userId,
+                                                  @RequestParam(value = "parentId", required = false, defaultValue = "0") Long parentId) {
+        return Results.success(taskService.listRootTasks(userId, parentId));
+    }
+}

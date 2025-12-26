@@ -68,6 +68,42 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<TaskRespDTO> listRootTasks(Long userId, Long parentId) {
+        Long normalizedParentId = normalizeParentId(parentId);
+
+        List<Task> tasks = taskMapper.selectList(new LambdaQueryWrapper<Task>()
+                .eq(Task::getUserId, userId)
+                .isNull(normalizedParentId == null, Task::getParentId)
+                .eq(normalizedParentId != null, Task::getParentId, normalizedParentId)
+                // 跨清单聚合时，为了前端更稳定，这里增加 listId/taskGroupId 的排序维度
+                .orderByAsc(Task::getListId)
+                .orderByAsc(Task::getTaskGroupId)
+                .orderByAsc(Task::getSortOrder)
+                .orderByAsc(Task::getId));
+
+        if (tasks.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // hasChildren: 批量查 parentId in (...)，避免 N+1
+        List<Long> ids = tasks.stream().map(Task::getId).toList();
+        List<Task> children = taskMapper.selectList(new LambdaQueryWrapper<Task>()
+                .select(Task::getParentId)
+                .eq(Task::getUserId, userId)
+                .in(Task::getParentId, ids)
+                .groupBy(Task::getParentId));
+
+        Set<Long> hasChildrenParents = new HashSet<>();
+        for (Task c : children) {
+            if (c.getParentId() != null) {
+                hasChildrenParents.add(c.getParentId());
+            }
+        }
+
+        return tasks.stream().map(t -> toResp(t, hasChildrenParents.contains(t.getId()))).toList();
+    }
+
+    @Override
     public List<TaskRespDTO> listChildren(Long userId, Long taskId) {
         Task parent = taskMapper.selectById(taskId);
         if (parent == null) {

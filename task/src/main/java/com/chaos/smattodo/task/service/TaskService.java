@@ -12,6 +12,14 @@ public interface TaskService {
 
     List<TaskRespDTO> listTasks(Long userId, Long listId, Long taskGroupId, Long parentId);
 
+    /**
+     * 获取该用户全部根任务
+     * @param userId 用户ID
+     * @param parentId 父任务ID，根任务的父任务ID 为 null
+     * @return 该用户全部根任务
+     */
+    List<TaskRespDTO> listRootTasks(Long userId, Long parentId);
+
     List<TaskRespDTO> listChildren(Long userId, Long taskId);
 
     TaskRespDTO createTask(Long userId, CreateTaskReqDTO dto);

@@ -51,7 +51,7 @@ CREATE TABLE `task` (
                         `user_id` BIGINT UNSIGNED NOT NULL COMMENT '所属用户ID (隔离校验)',
                         `list_id` BIGINT UNSIGNED NOT NULL COMMENT '所属清单ID (核心查询维度)',
                         `task_group_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '所属任务分组ID',
-                        `parent_id` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '直接父ID (顶级为NULL)',
+                        `parent_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '直接父ID (顶级为NULL)',
                         `path` VARCHAR(512) NOT NULL DEFAULT '' COMMENT '路径枚举,如 "0/1/5/"',
                         `level` INT NOT NULL DEFAULT 1 COMMENT '递归深度,1为根任务',
                         `name` VARCHAR(255) NOT NULL COMMENT '任务标题',
