@@ -10,6 +10,7 @@ volumes:
   smart-todo-nacos-data:
   smart-todo-rocketmq-namesrv:
   smart-todo-rocketmq-broker:
+  smart-todo-mongodb-data:  # 新增：MongoDB数据持久化卷
 
 services:
   # 1. MySQL 服务（smart-todo项目数据存储）
@@ -67,3 +68,18 @@ services:
     networks:
       - smart-todo-network
     restart: always
+    # 4. 新增：MongoDB 服务
+  smart-todo-mongodb:
+    image: mongo:6.0  # 使用MongoDB 6.0镜像（可根据需要调整版本）
+    container_name: smart-todo-mongodb
+    restart: always  # 容器退出时自动重启
+    networks:
+        - smart-todo-network  # 加入项目专属网络
+    volumes:
+        - smart-todo-mongodb-data:/data/db  # 数据持久化到本地卷
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: root  # 初始化root用户
+        MONGO_INITDB_ROOT_PASSWORD: root  # root用户密码
+        TZ: Asia/Shanghai  # 时区设置
+    ports:
+        - "27017:27017"  # 映射端口（主机:容器）

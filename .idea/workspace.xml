@@ -4,9 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="feat: 完成task模块清单分组与清单功能（删除逻辑代办）">
+    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="feat: 完成auth模块规约部分与实体类创建">
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiAgent/AIAgentApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiAgent/assistant/Assistant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiAgent/config/MemoryChatAssistantConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiAgent/config/SeparateChatAssistantConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiAgent/controller/TestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiAgent/entity/ChatForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiAgent/entity/ChatMessages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiAgent/store/MongoChatMemoryStore.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/resources/prompt.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/test/java/com/chaos/smarttodo/aiAgent/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nacos配置管理.md" beforeDir="false" afterPath="$PROJECT_DIR$/nacos配置管理.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai-agent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ai-agent/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,11 +45,12 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="customMavenHome" value="D:\Maven\apache-maven-3.9.9" />
-        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
         <option name="useMavenConfig" value="false" />
         <option name="userSettingsFile" value="D:\Maven\apache-maven-3.9.9\conf\settings.xml" />
       </MavenGeneralSettings>
@@ -50,7 +64,7 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="374Tx3iRfNBvO5CQtrI4YhySqqY" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -66,50 +80,89 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.AuthApplication.executor": "Run",
     "Spring Boot.GatewayApplication.executor": "Run",
-    "Spring Boot.TaskApplication.executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Desktop/Todolist/smart-todo/task/src/main/java/com/chaos/smattodo/task/common",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "run.configurations.included.in.services": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
-      "mysql"
+      "mysql",
+      "mongo"
     ]
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Desktop\Todolist\smart-todo\task\src\main\java\com\chaos\smattodo\task\common" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.chaos.smattodo.task.dto.req" />
-      <recent name="com.chaos.smattodo.task.config" />
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.chaos.smarttodo.aiAgent" />
     </key>
   </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
-        <option value="MicronautRunConfigurationType" />
-        <option value="QuarkusRunConfigurationType" />
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.TaskApplication">
-    <configuration name="AuthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="smart-todo-auth" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.chaos.smarttodo.auth.AuthApplication" />
+  <component name="RunManager" selected="Spring Boot.AIAgentApplication">
+    <configuration name="Test.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="smart-todo-ai-agent" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="Test" />
+      <option name="METHOD_NAME" value="test1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="smart-todo-ai-agent" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.chaos.smarttodo.auth.*" />
+          <option name="PATTERN" value="com.chaos.smarttodo.aiAgent.assistant.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.chaos.smarttodo.aiAgent" />
+      <option name="MAIN_CLASS_NAME" value="com.chaos.smarttodo.aiAgent.Test" />
+      <option name="METHOD_NAME" value="test1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test.test2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="smart-todo-ai-agent" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.chaos.smarttodo.aiAgent.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.chaos.smarttodo.aiAgent" />
+      <option name="MAIN_CLASS_NAME" value="com.chaos.smarttodo.aiAgent.Test" />
+      <option name="METHOD_NAME" value="test2" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AIAgentApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="smart-todo-ai-agent" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.chaos.smarttodo.aiAgent.AIAgentApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.chaos.smarttodo.aiAgent.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -139,8 +192,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.AIAgentApplication" />
+        <item itemvalue="JUnit.Test.test1 (1)" />
+        <item itemvalue="JUnit.Test.test2" />
+        <item itemvalue="JUnit.Test.test1" />
         <item itemvalue="Spring Boot.TaskApplication" />
-        <item itemvalue="Spring Boot.AuthApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -169,11 +225,8 @@
       <workItem from="1766293632323" duration="6757000" />
       <workItem from="1766335491975" duration="1049000" />
       <workItem from="1766336683573" duration="6408000" />
-      <workItem from="1766391726986" duration="14928000" />
-      <workItem from="1766467680175" duration="685000" />
-      <workItem from="1766481525164" duration="3858000" />
-      <workItem from="1766560206102" duration="5710000" />
-      <workItem from="1766576530154" duration="6108000" />
+      <workItem from="1766391726986" duration="331000" />
+      <workItem from="1766717681761" duration="14085000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 完成auth模块规约部分与实体类创建">
       <option name="closed" value="true" />
@@ -183,39 +236,7 @@
       <option name="project" value="LOCAL" />
       <updated>1766339134270</updated>
     </task>
-    <task id="LOCAL-00002" summary="update: 更新gateway模块未授权返回json与跨域配置">
-      <option name="closed" value="true" />
-      <created>1766392113087</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1766392113087</updated>
-    </task>
-    <task id="LOCAL-00003" summary="docs: 添加nacos配置文件">
-      <option name="closed" value="true" />
-      <created>1766393354796</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1766393354796</updated>
-    </task>
-    <task id="LOCAL-00004" summary="feat: 完成task模块listgroup部分功能（TODO: 嵌套删除）">
-      <option name="closed" value="true" />
-      <created>1766423484254</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1766423484254</updated>
-    </task>
-    <task id="LOCAL-00005" summary="feat: 完成task模块清单分组与清单功能（删除逻辑代办）">
-      <option name="closed" value="true" />
-      <created>1766582668014</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1766582668014</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,11 +244,23 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: 完成auth模块规约部分与实体类创建" />
-    <MESSAGE value="update: 更新gateway模块未授权返回json与跨域配置" />
-    <MESSAGE value="docs: 添加nacos配置文件" />
-    <MESSAGE value="feat: 完成task模块listgroup部分功能（TODO: 嵌套删除）" />
-    <MESSAGE value="feat: 完成task模块清单分组与清单功能（删除逻辑代办）" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 完成task模块清单分组与清单功能（删除逻辑代办）" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 完成auth模块规约部分与实体类创建" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiAgent/assistant/Assistant.java</url>
+          <line>10</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ai-agent/src/test/java/com/chaos/smarttodo/aiAgent/Test.java</url>
+          <line>10</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -1,0 +1,23 @@
+server:
+  port: 8007
+langchain4j:
+  open-ai:
+    chat-model:
+      model-name: gpt-4o-mini
+      api-key: demo
+      base-url: http://langchain4j.dev/demo/openai/v1
+      log-requests: true
+      log-responses: true
+  community:
+    dashscope:
+      chat-model:
+        api-key: sk-d681ee3d565048babee7fd6f9dae3e1e
+        model-name: qwen-max
+      embedding-model:
+        api-key: text-embedding-v3
+        model-name: sk-d681ee3d565048babee7fd6f9dae3e1e
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/chat_memory_db
