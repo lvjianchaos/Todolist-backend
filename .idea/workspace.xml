@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="fix: 解决mybatis-plus自动忽略null字段使得字段不得置空">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smart-todo-init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/smart-todo-init.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/controller/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TaskServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="feat: 添加获取全部跟任务功能" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -181,6 +175,7 @@
       <workItem from="1766671552515" duration="3378000" />
       <workItem from="1766714379325" duration="5587000" />
       <workItem from="1766722775215" duration="1000" />
+      <workItem from="1766756892982" duration="486000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 完成auth模块规约部分与实体类创建">
       <option name="closed" value="true" />
@@ -254,7 +249,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766666588414</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="feat: 添加获取全部跟任务功能">
+      <option name="closed" value="true" />
+      <created>1766756950479</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1766756950479</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +273,8 @@
     <MESSAGE value="update: 修改sql初始化语句" />
     <MESSAGE value="feat: 基本完成task模块" />
     <MESSAGE value="fix: 解决mybatis-plus自动忽略null字段使得字段不得置空" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: 解决mybatis-plus自动忽略null字段使得字段不得置空" />
+    <MESSAGE value="feat: 添加获取全部跟任务功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 添加获取全部跟任务功能" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
