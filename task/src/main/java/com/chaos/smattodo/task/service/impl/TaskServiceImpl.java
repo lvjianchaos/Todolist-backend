@@ -2,6 +2,10 @@ package com.chaos.smattodo.task.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.chaos.smattodo.task.activity.enums.ActivityAction;
+import com.chaos.smattodo.task.activity.enums.ActivityEntityType;
+import com.chaos.smattodo.task.activity.service.ActivityContext;
+import com.chaos.smattodo.task.activity.service.ActivityRecorder;
 import com.chaos.smattodo.task.common.enums.TaskErrorCodeEnum;
 import com.chaos.smattodo.task.common.enums.TodoListErrorCodeEnum;
 import com.chaos.smattodo.task.common.exception.ClientException;
@@ -30,6 +34,7 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskMapper taskMapper;
     private final TodoListMapper todoListMapper;
+    private final ActivityRecorder activityRecorder;
 
     @Override
     public List<TaskRespDTO> listTasks(Long userId, Long listId, Long taskGroupId, Long parentId) {
@@ -151,6 +156,18 @@ public class TaskServiceImpl implements TaskService {
         }
         taskMapper.updateById(task);
 
+        TodoList list = todoListMapper.selectById(task.getListId());
+        activityRecorder.record(userId,
+                ActivityEntityType.TASK,
+                ActivityAction.CREATE,
+                ActivityContext.builder()
+                        .listId(task.getListId())
+                        .listName(list == null ? null : list.getName())
+                        .taskId(task.getId())
+                        .taskName(task.getName())
+                        .summary("创建 任务 " + task.getName())
+                        .build());
+
         return toResp(task, false);
     }
 
@@ -164,6 +181,9 @@ public class TaskServiceImpl implements TaskService {
         if (!Objects.equals(task.getUserId(), userId)) {
             throw new ClientException(TaskErrorCodeEnum.TASK_NO_PERMISSION);
         }
+
+        String oldName = task.getName();
+        Integer oldStatus = task.getStatus();
 
         LambdaUpdateWrapper<Task> update = new LambdaUpdateWrapper<Task>()
                 .eq(Task::getId, taskId)
@@ -206,6 +226,35 @@ public class TaskServiceImpl implements TaskService {
         }
 
         Task updated = taskMapper.selectById(taskId);
+
+        // 记录 rename / complete 两类你关心的动态
+        TodoList list = todoListMapper.selectById(updated.getListId());
+        if (dto.getName() != null && !Objects.equals(oldName, updated.getName())) {
+            activityRecorder.record(userId,
+                    ActivityEntityType.TASK,
+                    ActivityAction.RENAME,
+                    ActivityContext.builder()
+                            .listId(updated.getListId())
+                            .listName(list == null ? null : list.getName())
+                            .taskId(updated.getId())
+                            .taskName(updated.getName())
+                            .summary("重命名 任务 " + oldName + " 为 " + updated.getName())
+                            .extraData("{\"oldName\":\"" + escapeJson(oldName) + "\",\"newName\":\"" + escapeJson(updated.getName()) + "\"}")
+                            .build());
+        }
+        if (dto.getStatus() != null && !Objects.equals(oldStatus, updated.getStatus()) && Objects.equals(updated.getStatus(), 1)) {
+            activityRecorder.record(userId,
+                    ActivityEntityType.TASK,
+                    ActivityAction.COMPLETE,
+                    ActivityContext.builder()
+                            .listId(updated.getListId())
+                            .listName(list == null ? null : list.getName())
+                            .taskId(updated.getId())
+                            .taskName(updated.getName())
+                            .summary("完成 任务 " + updated.getName())
+                            .build());
+        }
+
         boolean hasChildren = hasChildren(userId, taskId);
         return toResp(updated, hasChildren);
     }
@@ -221,12 +270,25 @@ public class TaskServiceImpl implements TaskService {
             throw new ClientException(TaskErrorCodeEnum.TASK_NO_PERMISSION);
         }
 
+        // 只记录最高层 task 的删除（无论是否 cascade）
+        TodoList list = todoListMapper.selectById(task.getListId());
+        activityRecorder.record(userId,
+                ActivityEntityType.TASK,
+                ActivityAction.DELETE,
+                ActivityContext.builder()
+                        .listId(task.getListId())
+                        .listName(list == null ? null : list.getName())
+                        .taskId(task.getId())
+                        .taskName(task.getName())
+                        .summary("删除 任务 " + task.getName())
+                        .extraData(cascade ? "{\"cascade\":true}" : "{\"cascade\":false}")
+                        .build());
+
         if (!cascade) {
             taskMapper.deleteById(taskId);
             return;
         }
 
-        // 递归级联删除（BFS）：避免依赖 path 格式
         Set<Long> toDelete = new LinkedHashSet<>();
         Deque<Long> queue = new ArrayDeque<>();
         queue.add(taskId);
@@ -446,5 +508,16 @@ public class TaskServiceImpl implements TaskService {
         dto.setUpdatedAt(task.getUpdatedAt());
         dto.setHasChildren(hasChildren);
         return dto;
+    }
+
+    private static String escapeJson(String s) {
+        if (s == null) {
+            return "";
+        }
+        return s.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
     }
 }

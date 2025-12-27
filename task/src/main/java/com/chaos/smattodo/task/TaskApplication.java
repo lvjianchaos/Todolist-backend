@@ -10,7 +10,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("com.chaos.smattodo.task.mapper")
+@MapperScan({"com.chaos.smattodo.task.mapper", "com.chaos.smattodo.task.activity.mapper"})
 public class TaskApplication {
     public static void main(String[] args) {
         SpringApplication.run(TaskApplication.class, args);

@@ -1,6 +1,10 @@
 package com.chaos.smattodo.task.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.chaos.smattodo.task.activity.enums.ActivityAction;
+import com.chaos.smattodo.task.activity.enums.ActivityEntityType;
+import com.chaos.smattodo.task.activity.service.ActivityContext;
+import com.chaos.smattodo.task.activity.service.ActivityRecorder;
 import com.chaos.smattodo.task.common.enums.TaskGroupErrorCodeEnum;
 import com.chaos.smattodo.task.common.enums.TodoListErrorCodeEnum;
 import com.chaos.smattodo.task.common.exception.ClientException;
@@ -33,6 +37,8 @@ public class TaskGroupServiceImpl implements TaskGroupService {
     private final TaskMapper taskMapper;
     private final TodoListMapper todoListMapper;
 
+    private final ActivityRecorder activityRecorder;
+
     @Override
     public List<TaskGroupRespDTO> listTaskGroups(Long userId, Long listId) {
         ensureListPermission(userId, listId);
@@ -58,6 +64,19 @@ public class TaskGroupServiceImpl implements TaskGroupService {
         group.setSortOrder((dto.getPrevSortOrder() == null ? 0d : dto.getPrevSortOrder()) + GAP);
         group.setIsDefault(0);
         taskGroupMapper.insert(group);
+
+        TodoList list = todoListMapper.selectById(dto.getListId());
+        activityRecorder.record(userId,
+                ActivityEntityType.TASK_GROUP,
+                ActivityAction.CREATE,
+                ActivityContext.builder()
+                        .listId(group.getListId())
+                        .listName(list == null ? null : list.getName())
+                        .taskGroupId(group.getId())
+                        .taskGroupName(group.getName())
+                        .summary("创建 任务分组 " + group.getName())
+                        .build());
+
         return toResp(group);
     }
 
@@ -70,8 +89,23 @@ public class TaskGroupServiceImpl implements TaskGroupService {
         }
         ensureListPermission(userId, group.getListId());
 
+        String oldName = group.getName();
         group.setName(dto.getName());
         taskGroupMapper.updateById(group);
+
+        TodoList list = todoListMapper.selectById(group.getListId());
+        activityRecorder.record(userId,
+                ActivityEntityType.TASK_GROUP,
+                ActivityAction.RENAME,
+                ActivityContext.builder()
+                        .listId(group.getListId())
+                        .listName(list == null ? null : list.getName())
+                        .taskGroupId(group.getId())
+                        .taskGroupName(group.getName())
+                        .summary("重命名 任务分组 " + oldName + " 为 " + group.getName())
+                        .extraData("{\"oldName\":\"" + escapeJson(oldName) + "\",\"newName\":\"" + escapeJson(group.getName()) + "\"}")
+                        .build());
+
         return toResp(group);
     }
 
@@ -87,6 +121,18 @@ public class TaskGroupServiceImpl implements TaskGroupService {
         if (Objects.equals(group.getIsDefault(), 1)) {
             throw new ClientException(TaskGroupErrorCodeEnum.TASK_GROUP_DEFAULT_CANNOT_DELETE);
         }
+
+        TodoList list = todoListMapper.selectById(group.getListId());
+        activityRecorder.record(userId,
+                ActivityEntityType.TASK_GROUP,
+                ActivityAction.DELETE,
+                ActivityContext.builder()
+                        .listId(group.getListId())
+                        .listName(list == null ? null : list.getName())
+                        .taskGroupId(group.getId())
+                        .taskGroupName(group.getName())
+                        .summary("删除 任务分组 " + group.getName())
+                        .build());
 
         // 级联删除：先删该分组下所有任务，再删分组
         taskMapper.delete(new LambdaQueryWrapper<Task>()
@@ -174,5 +220,15 @@ public class TaskGroupServiceImpl implements TaskGroupService {
         dto.setIsDefault(group.getIsDefault());
         return dto;
     }
-}
 
+    private static String escapeJson(String s) {
+        if (s == null) {
+            return "";
+        }
+        return s.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
+    }
+}

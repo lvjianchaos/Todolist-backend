@@ -1,6 +1,10 @@
 package com.chaos.smattodo.task.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.chaos.smattodo.task.activity.enums.ActivityAction;
+import com.chaos.smattodo.task.activity.enums.ActivityEntityType;
+import com.chaos.smattodo.task.activity.service.ActivityContext;
+import com.chaos.smattodo.task.activity.service.ActivityRecorder;
 import com.chaos.smattodo.task.common.enums.ListGroupErrorCodeEnum;
 import com.chaos.smattodo.task.common.enums.TodoListErrorCodeEnum;
 import com.chaos.smattodo.task.common.exception.ClientException;
@@ -43,6 +47,8 @@ public class TodoListServiceImpl implements TodoListService {
      */
     private final ListGroupService listGroupService;
 
+    private final ActivityRecorder activityRecorder;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public TodoListRespDTO createList(Long userId, CreateListReqDTO dto) {
@@ -62,7 +68,6 @@ public class TodoListServiceImpl implements TodoListService {
         todoListMapper.insert(list);
 
         // 创建该清单下的两个任务分组
-        // 1) 未分类（is_default = 1）
         TaskGroup unclassified = new TaskGroup();
         unclassified.setListId(list.getId());
         unclassified.setName("未分类");
@@ -70,13 +75,23 @@ public class TodoListServiceImpl implements TodoListService {
         unclassified.setSortOrder(GAP);
         taskGroupMapper.insert(unclassified);
 
-        // 2) 默认分组（is_default = 0）
         TaskGroup defaultGroup = new TaskGroup();
         defaultGroup.setListId(list.getId());
         defaultGroup.setName("默认分组");
         defaultGroup.setIsDefault(0);
         defaultGroup.setSortOrder(GAP * 2);
         taskGroupMapper.insert(defaultGroup);
+
+        activityRecorder.record(userId,
+                ActivityEntityType.LIST,
+                ActivityAction.CREATE,
+                ActivityContext.builder()
+                        .listGroupId(group.getId())
+                        .lgName(group.getName())
+                        .listId(list.getId())
+                        .listName(list.getName())
+                        .summary("创建 清单 " + list.getName())
+                        .build());
 
         return toTodoListResp(list);
     }
@@ -92,8 +107,24 @@ public class TodoListServiceImpl implements TodoListService {
             throw new ClientException(TodoListErrorCodeEnum.TODO_LIST_NO_PERMISSION);
         }
 
+        ListGroup group = listGroupMapper.selectById(list.getListGroupId());
+
+        String oldName = list.getName();
         list.setName(dto.getName());
         todoListMapper.updateById(list);
+
+        activityRecorder.record(userId,
+                ActivityEntityType.LIST,
+                ActivityAction.RENAME,
+                ActivityContext.builder()
+                        .listGroupId(list.getListGroupId())
+                        .lgName(group == null ? null : group.getName())
+                        .listId(list.getId())
+                        .listName(list.getName())
+                        .summary("重命名 清单 " + oldName + " 为 " + list.getName())
+                        .extraData("{\"oldName\":\"" + escapeJson(oldName) + "\",\"newName\":\"" + escapeJson(list.getName()) + "\"}")
+                        .build());
+
         return toTodoListResp(list);
     }
 
@@ -107,6 +138,19 @@ public class TodoListServiceImpl implements TodoListService {
         if (!Objects.equals(list.getUserId(), userId)) {
             throw new ClientException(TodoListErrorCodeEnum.TODO_LIST_NO_PERMISSION);
         }
+
+        ListGroup group = listGroupMapper.selectById(list.getListGroupId());
+
+        activityRecorder.record(userId,
+                ActivityEntityType.LIST,
+                ActivityAction.DELETE,
+                ActivityContext.builder()
+                        .listGroupId(list.getListGroupId())
+                        .lgName(group == null ? null : group.getName())
+                        .listId(list.getId())
+                        .listName(list.getName())
+                        .summary("删除 清单 " + list.getName())
+                        .build());
 
         // 级联删除：清单 -> 任务分组 -> 任务
         taskMapper.delete(new LambdaQueryWrapper<Task>()
@@ -200,5 +244,15 @@ public class TodoListServiceImpl implements TodoListService {
         dto.setSortOrder(list.getSortOrder());
         return dto;
     }
-}
 
+    private static String escapeJson(String s) {
+        if (s == null) {
+            return "";
+        }
+        return s.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
+    }
+}

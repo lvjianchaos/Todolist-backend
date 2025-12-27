@@ -4,7 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="feat: 添加获取全部跟任务功能" />
+    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="feat: 添加获取全部跟任务功能">
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/ActivityApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/enums/ActivityAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/enums/ActivityEntityType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/enums/ActivityErrorCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/errorcode/BaseErrorCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/errorcode/IErrorCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/exception/AbstractException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/exception/ClientException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/exception/ServiceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/result/PageResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/result/Result.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/result/Results.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/config/MybatisPlusConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/controller/ActivityLogController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/dto/resp/ActivityLogRespDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/entity/ActivityLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/mapper/ActivityLogMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/service/ActivityLogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/service/impl/ActivityLogServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/entity/ActivityLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/enums/ActivityAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/enums/ActivityEntityType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/mapper/ActivityLogMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/service/ActivityContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/service/ActivityRecorder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/service/impl/ActivityRecorderImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/activity/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/smart-todo-init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/smart-todo-init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/TaskApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/TaskApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/ListGroupServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/ListGroupServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TaskGroupServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TaskGroupServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TaskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TodoListServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TodoListServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,9 +54,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -47,43 +85,45 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="374Tx3iRfNBvO5CQtrI4YhySqqY" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.AuthApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.GatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.TaskApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/Todolist/smart-todo/task/src/main/java/com/chaos/smattodo/task/common&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.ActivityApplication.executor": "Run",
+    "Spring Boot.AuthApplication.executor": "Run",
+    "Spring Boot.GatewayApplication.executor": "Run",
+    "Spring Boot.TaskApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Desktop/Todolist/smart-todo/activity/src/main/java/com/chaos/smarttodo/activity/common",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Desktop\Todolist\smart-todo\activity\src\main\java\com\chaos\smarttodo\activity\common" />
       <recent name="D:\Desktop\Todolist\smart-todo\task\src\main\java\com\chaos\smattodo\task\common" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -100,7 +140,20 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.TaskApplication">
+  <component name="RunManager" selected="Spring Boot.ActivityApplication">
+    <configuration name="ActivityApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="smart-todo-activity" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.chaos.smarttodo.activity.ActivityApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.chaos.smarttodo.activity.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AuthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="smart-todo-auth" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.chaos.smarttodo.auth.AuthApplication" />
@@ -136,6 +189,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.ActivityApplication" />
         <item itemvalue="Spring Boot.TaskApplication" />
         <item itemvalue="Spring Boot.AuthApplication" />
       </list>

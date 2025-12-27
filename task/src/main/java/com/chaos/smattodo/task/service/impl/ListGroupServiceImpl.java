@@ -1,6 +1,10 @@
 package com.chaos.smattodo.task.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.chaos.smattodo.task.activity.enums.ActivityAction;
+import com.chaos.smattodo.task.activity.enums.ActivityEntityType;
+import com.chaos.smattodo.task.activity.service.ActivityContext;
+import com.chaos.smattodo.task.activity.service.ActivityRecorder;
 import com.chaos.smattodo.task.common.enums.ListGroupErrorCodeEnum;
 import com.chaos.smattodo.task.common.exception.ClientException;
 import com.chaos.smattodo.task.dto.req.CreateListGroupReqDTO;
@@ -35,6 +39,8 @@ public class ListGroupServiceImpl implements ListGroupService {
 
     private final TaskGroupMapper taskGroupMapper;
     private final TaskMapper taskMapper;
+
+    private final ActivityRecorder activityRecorder;
 
     @Override
     public List<ListGroupRespDTO> listListGroupByUserId(Long userId) {
@@ -75,6 +81,15 @@ public class ListGroupServiceImpl implements ListGroupService {
         group.setSortOrder(sortOrder);
         listGroupMapper.insert(group);
 
+        activityRecorder.record(userId,
+                ActivityEntityType.LIST_GROUP,
+                ActivityAction.CREATE,
+                ActivityContext.builder()
+                        .listGroupId(group.getId())
+                        .lgName(group.getName())
+                        .summary("创建 清单分组 " + group.getName())
+                        .build());
+
         ListGroupRespDTO resp = toListGroupResp(group);
         resp.setList(Collections.emptyList());
         return resp;
@@ -91,8 +106,19 @@ public class ListGroupServiceImpl implements ListGroupService {
             throw new ClientException(ListGroupErrorCodeEnum.LIST_GROUP_NO_PERMISSION);
         }
 
+        String oldName = group.getName();
         group.setName(dto.getName());
         listGroupMapper.updateById(group);
+
+        activityRecorder.record(userId,
+                ActivityEntityType.LIST_GROUP,
+                ActivityAction.RENAME,
+                ActivityContext.builder()
+                        .listGroupId(group.getId())
+                        .lgName(group.getName())
+                        .summary("重命名 清单分组 " + oldName + " 为 " + group.getName())
+                        .extraData("{\"oldName\":\"" + escapeJson(oldName) + "\",\"newName\":\"" + escapeJson(group.getName()) + "\"}")
+                        .build());
 
         ListGroupRespDTO resp = toListGroupResp(group);
         resp.setList(listListsByGroup(userId, groupId));
@@ -110,6 +136,16 @@ public class ListGroupServiceImpl implements ListGroupService {
             throw new ClientException(ListGroupErrorCodeEnum.LIST_GROUP_NO_PERMISSION);
         }
 
+        // 先记日志（删除后可能查不到名称）
+        activityRecorder.record(userId,
+                ActivityEntityType.LIST_GROUP,
+                ActivityAction.DELETE,
+                ActivityContext.builder()
+                        .listGroupId(group.getId())
+                        .lgName(group.getName())
+                        .summary("删除 清单分组 " + group.getName())
+                        .build());
+
         // 层层级联删除（批量版）：ListGroup -> TodoList -> TaskGroup -> Task
         List<Long> listIds = todoListMapper.selectList(new LambdaQueryWrapper<TodoList>()
                         .select(TodoList::getId)
@@ -121,20 +157,16 @@ public class ListGroupServiceImpl implements ListGroupService {
                 .toList();
 
         if (!listIds.isEmpty()) {
-            // 删 task（按 listId 批量）
             taskMapper.delete(new LambdaQueryWrapper<Task>()
                     .eq(Task::getUserId, userId)
                     .in(Task::getListId, listIds));
 
-            // 删 task_group（按 listId 批量）
             taskGroupMapper.delete(new LambdaQueryWrapper<TaskGroup>()
                     .in(TaskGroup::getListId, listIds));
 
-            // 删 list（按 id 批量）
             todoListMapper.deleteBatchIds(listIds);
         }
 
-        // 最后删 list_group
         listGroupMapper.deleteById(groupId);
     }
 
@@ -224,5 +256,15 @@ public class ListGroupServiceImpl implements ListGroupService {
         dto.setSortOrder(list.getSortOrder());
         return dto;
     }
-}
 
+    private static String escapeJson(String s) {
+        if (s == null) {
+            return "";
+        }
+        return s.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
+    }
+}

@@ -9,7 +9,7 @@ CREATE TABLE `user` (
                         `password` VARCHAR(100) NOT NULL COMMENT '加密存储的密码',
                         `nickname` VARCHAR(50) DEFAULT NULL COMMENT '用户昵称',
                         `avatar` VARCHAR(255) DEFAULT NULL COMMENT '头像URL',
-                        `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                        `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
 ) ENGINE=InnoDB COMMENT='用户表';
 
 -- 2. 清单分组表
@@ -75,16 +75,31 @@ CREATE TABLE `task` (
                         INDEX `idx_user_status_due` (`user_id`, `status`, `due_at`)
 ) ENGINE=InnoDB COMMENT='任务表';
 
--- 6. 活动日志表
+-- 6. 活动日志表（冗余快照，不连表）
 CREATE TABLE `activity_log` (
                                 `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '主键ID',
                                 `user_id` BIGINT UNSIGNED NOT NULL COMMENT '执行用户ID',
-                                `entity_id` BIGINT UNSIGNED NOT NULL COMMENT '操作实体ID',
-                                `entity_type` TINYINT NOT NULL COMMENT '实体类型: 0-分组, 1-清单, 2-任务组, 3-任务',
-                                `action` TINYINT NOT NULL COMMENT '操作类型: 0-创建, 1-删除, 2-完成, 3-修改, 4-移动',
-                                `summary` VARCHAR(255) DEFAULT NULL COMMENT '操作简述快照',
+                                `username` VARCHAR(50) DEFAULT NULL COMMENT '用户快照名(可选)',
+
+                                `entity_type` TINYINT NOT NULL COMMENT '实体类型: 0-list_group, 1-list, 2-task_group, 3-task',
+                                `action` TINYINT NOT NULL COMMENT '操作类型: 0-创建, 1-删除, 2-完成, 3-重命名',
+
+                                `list_group_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '清单分组ID快照',
+                                `lg_name` VARCHAR(100) DEFAULT NULL COMMENT '清单分组名称快照',
+
+                                `list_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '清单ID快照',
+                                `list_name` VARCHAR(100) DEFAULT NULL COMMENT '清单名称快照',
+
+                                `tg_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '任务分组ID快照',
+                                `tg_name` VARCHAR(100) DEFAULT NULL COMMENT '任务分组名称快照',
+
+                                `task_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '任务ID快照',
+                                `task_name` VARCHAR(255) DEFAULT NULL COMMENT '任务名称快照',
+
+                                `summary` VARCHAR(255) DEFAULT NULL COMMENT '前端展示用简述',
                                 `extra_data` JSON DEFAULT NULL COMMENT '详细快照或差异数据 (JSON格式)',
                                 `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '日志记录时间',
-                                INDEX `idx_user_activity` (`user_id`, `created_at`),
-                                INDEX `idx_entity_log` (`entity_id`, `entity_type`)
+
+                                INDEX `idx_user_created` (`user_id`, `created_at`, `id`),
+                                INDEX `idx_user_list_created` (`user_id`, `list_id`, `created_at`, `id`)
 ) ENGINE=InnoDB COMMENT='操作日志表';
