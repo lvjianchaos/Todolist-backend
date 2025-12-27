@@ -6,10 +6,7 @@ networks:
 # 定义smart-todo项目专属数据卷
 volumes:
   smart-todo-mysql-data:
-  smart-todo-redis-data:
   smart-todo-nacos-data:
-  smart-todo-rocketmq-namesrv:
-  smart-todo-rocketmq-broker:
 
 services:
   # 1. MySQL 服务（smart-todo项目数据存储）
@@ -36,21 +33,6 @@ services:
       --lower_case_table_names=1
       --max_allowed_packet=128M
 
-  # 2. Redis 服务（smart-todo项目缓存/分布式锁）
-  smart-todo-redis:
-    image: redis:7.2-alpine
-    container_name: smart-todo-redis
-    restart: always
-    networks:
-      - smart-todo-network
-    volumes:
-      - smart-todo-redis-data:/data
-    environment:
-      TZ: Asia/Shanghai
-    ports:
-      - "6379:6379"
-    command: redis-server --appendonly yes
-
   # 3. Nacos 服务（smart-todo项目注册中心/配置中心）
   smart-todo-nacos:
     image: nacos/nacos-server:v2.2.3
@@ -67,3 +49,77 @@ services:
     networks:
       - smart-todo-network
     restart: always
+
+
+  auth:
+    build:
+      context: ./auth
+    container_name: smart_todo-auth
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=smart-todo-nacos:8848
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=smart-todo-nacos:8848
+      - JAVA_OPTS=-Xms256m -Xmx256m
+      - SMART_TODO_MYSQL_HOST=smart-todo-mysql
+      - SMART_TODO_MYSQL_PORT=3306
+    ports:
+      - "8001:8001"
+    depends_on:
+      - smart-todo-nacos
+    networks:
+      - smart-todo-network
+
+  task:
+    build:
+      context: ./task
+    container_name: smart_todo-task
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=smart-todo-nacos:8848
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=smart-todo-nacos:8848
+      - JAVA_OPTS=-Xms256m -Xmx256m
+      - SMART_TODO_MYSQL_HOST=smart-todo-mysql
+      - SMART_TODO_MYSQL_PORT=3306
+    ports:
+      - "8002:8002"
+    depends_on:
+      - smart-todo-nacos
+    networks:
+      - smart-todo-network
+
+  activity:
+    build:
+      context: ./activity
+    container_name: smart_todo-activity
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=smart-todo-nacos:8848
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=smart-todo-nacos:8848
+      - JAVA_OPTS=-Xms256m -Xmx256m
+      - SMART_TODO_MYSQL_HOST=smart-todo-mysql
+      - SMART_TODO_MYSQL_PORT=3306
+    ports:
+      - "8003:8003"
+    depends_on:
+      - smart-todo-nacos
+    networks:
+      - smart-todo-network
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: smart_todo-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=smart-todo-nacos:8848
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=smart-todo-nacos:8848
+      - JAVA_OPTS=-Xms256m -Xmx256m
+    ports:
+      - "8000:8000"
+    depends_on:
+      - smart-todo-nacos
+      - auth
+      - task
+      - activity
+    networks:
+      - smart-todo-network

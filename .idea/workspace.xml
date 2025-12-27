@@ -4,44 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="feat: 添加获取全部跟任务功能">
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/ActivityApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/enums/ActivityAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/enums/ActivityEntityType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/enums/ActivityErrorCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/errorcode/BaseErrorCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/errorcode/IErrorCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/exception/AbstractException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/exception/ClientException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/exception/ServiceException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/result/PageResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/result/Result.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/common/result/Results.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/config/MybatisPlusConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/controller/ActivityLogController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/dto/resp/ActivityLogRespDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/entity/ActivityLog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/mapper/ActivityLogMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/service/ActivityLogService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/java/com/chaos/smarttodo/activity/service/impl/ActivityLogServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/activity/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/entity/ActivityLog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/enums/ActivityAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/enums/ActivityEntityType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/mapper/ActivityLogMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/service/ActivityContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/service/ActivityRecorder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/activity/service/impl/ActivityRecorderImpl.java" afterDir="false" />
+    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="docs: 更新nacos配置">
+      <change afterPath="$PROJECT_DIR$/activity/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gateway/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activity/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/activity/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smart-todo-init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/smart-todo-init.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/TaskApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/TaskApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/ListGroupServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/ListGroupServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TaskGroupServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TaskGroupServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TaskServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TodoListServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task/src/main/java/com/chaos/smattodo/task/service/impl/TodoListServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nacos配置管理.md" beforeDir="false" afterPath="$PROJECT_DIR$/nacos配置管理.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/task/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,35 +65,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.ActivityApplication.executor": "Run",
-    "Spring Boot.AuthApplication.executor": "Run",
-    "Spring Boot.GatewayApplication.executor": "Run",
-    "Spring Boot.TaskApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Desktop/Todolist/smart-todo/activity/src/main/java/com/chaos/smarttodo/activity/common",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ActivityApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.AuthApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.GatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.TaskApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/Todolist/smart-todo/activity/src/main/java/com/chaos/smarttodo/activity/common&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Desktop\Todolist\smart-todo\activity\src\main\java\com\chaos\smarttodo\activity\common" />
@@ -230,6 +203,7 @@
       <workItem from="1766714379325" duration="5587000" />
       <workItem from="1766722775215" duration="1000" />
       <workItem from="1766756892982" duration="486000" />
+      <workItem from="1766848503656" duration="6219000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 完成auth模块规约部分与实体类创建">
       <option name="closed" value="true" />
@@ -311,7 +285,23 @@
       <option name="project" value="LOCAL" />
       <updated>1766756950479</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="feat: 完成动态模块">
+      <option name="closed" value="true" />
+      <created>1766841614324</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1766841614324</updated>
+    </task>
+    <task id="LOCAL-00012" summary="docs: 更新nacos配置">
+      <option name="closed" value="true" />
+      <created>1766848574469</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1766848574469</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,7 +318,9 @@
     <MESSAGE value="feat: 基本完成task模块" />
     <MESSAGE value="fix: 解决mybatis-plus自动忽略null字段使得字段不得置空" />
     <MESSAGE value="feat: 添加获取全部跟任务功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 添加获取全部跟任务功能" />
+    <MESSAGE value="feat: 完成动态模块" />
+    <MESSAGE value="docs: 更新nacos配置" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs: 更新nacos配置" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
