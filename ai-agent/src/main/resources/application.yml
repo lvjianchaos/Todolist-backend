@@ -1,0 +1,30 @@
+server:
+  port: 8004
+
+spring:
+  application:
+    name: ai-agent
+  data:
+    redis:
+      host: ${SMART_TODO_REDIS_HOST:127.0.0.1}
+      port: ${SMART_TODO_REDIS_PORT:6379}
+      timeout: 3s
+
+  ai:
+    openai:
+      # DeepSeek is OpenAI-compatible. Provide these via env/Nacos.
+      base-url: ${DEEPSEEK_BASE_URL:https://api.deepseek.com}
+      api-key: ${DEEPSEEK_API_KEY:}
+      chat:
+        options:
+          model: ${DEEPSEEK_MODEL:deepseek-chat}
+          temperature: 0.2
+
+ai:
+  memory:
+    ttl-seconds: 1800 # 30 minutes
+    max-messages: 20  # 10 rounds * 2 (user+assistant)
+  system-prompt: |
+    你是 Smart-Todo 的 AI 助手。你的任务是把用户中文输入解析为可执行的任务操作。
+    输出必须是严格 JSON，符合我给定的 schema，不要输出多余文本。
+    如日期无法确定，填 null。

@@ -4,17 +4,47 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="docs: 更新nacos配置">
-      <change afterPath="$PROJECT_DIR$/activity/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/Dockerfile" afterDir="false" />
+    <list default="true" id="50370136-c6d0-4d9e-a1ba-83758258accb" name="Changes" comment="config: 添加部署相关配置">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/AIAgentApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/TaskClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/dto/CreateListGroupReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/dto/CreateListReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/dto/CreateTaskGroupReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/dto/CreateTaskReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/dto/ListGroupRespDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/dto/PatchTaskReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/dto/TaskGroupRespDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/dto/TaskRespDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/dto/TaskResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/client/dto/TodoListRespDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/config/AiAgentConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/config/AiMemoryProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/config/ChatClientConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/config/RedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/config/SpringAiLenientJsonConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/model/ChatMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/model/ConversationMemory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/repo/ConversationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/repo/RedisConversationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/service/ChatService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/service/DefaultTaskOrchestrator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/service/llm/AiPlan.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/service/llm/DeepSeekPlanner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/service/llm/JsonExtractors.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/service/nlp/SimpleChineseTaskParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/web/ChatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/web/dto/ChatReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/java/com/chaos/smarttodo/aiagent/web/dto/ChatRespDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/test/java/com/chaos/smarttodo/aiagent/service/ChatServiceTrimTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-agent/src/test/java/com/chaos/smarttodo/aiagent/service/llm/JsonExtractorsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/activity/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/activity/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai-agent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ai-agent/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nacos配置管理.md" beforeDir="false" afterPath="$PROJECT_DIR$/nacos配置管理.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/task/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +58,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -114,6 +144,13 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.ActivityApplication">
+    <configuration name="AIAgentApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="smart-todo-ai-agent" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.chaos.smarttodo.aiagent.AIAgentApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ActivityApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="smart-todo-activity" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.chaos.smarttodo.activity.ActivityApplication" />
@@ -203,7 +240,8 @@
       <workItem from="1766714379325" duration="5587000" />
       <workItem from="1766722775215" duration="1000" />
       <workItem from="1766756892982" duration="486000" />
-      <workItem from="1766848503656" duration="6219000" />
+      <workItem from="1766848503656" duration="6926000" />
+      <workItem from="1766902337749" duration="10658000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 完成auth模块规约部分与实体类创建">
       <option name="closed" value="true" />
@@ -301,7 +339,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766848574469</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="config: 添加部署相关配置">
+      <option name="closed" value="true" />
+      <created>1766855534979</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1766855534979</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -320,7 +366,8 @@
     <MESSAGE value="feat: 添加获取全部跟任务功能" />
     <MESSAGE value="feat: 完成动态模块" />
     <MESSAGE value="docs: 更新nacos配置" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs: 更新nacos配置" />
+    <MESSAGE value="config: 添加部署相关配置" />
+    <option name="LAST_COMMIT_MESSAGE" value="config: 添加部署相关配置" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
