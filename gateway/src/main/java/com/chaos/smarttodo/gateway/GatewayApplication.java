@@ -6,6 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * 网关启动类
+ * 负责路由转发与鉴权处理
  */
 @SpringBootApplication
 @EnableDiscoveryClient // 开启服务发现功能
